@@ -17,6 +17,7 @@
 <div class="loading-screen"></div>
 <body>
     <h2>TRPG　キャラ一覧</h2>
+
     <div class="main-container">
         <div class="sidebar" id="sidebar"></div>
         <div class="content-area" id="content-area"></div>
@@ -47,6 +48,10 @@ function renderContent(char, contentArea) {
                     <div class="info-row"><span>HO：</span>${char.ho}（${char.ho_name}）</div>
                     <div class="info-row">
                       <span>ステータス：</span>
+                      <br>
+                          <label for="sp">▼ステータスを表示します</label>
+                          <input type="checkbox"id="sp">
+                      <div id="status-sp-area">
                       <table class="status-table">
                         <tr>
                           <th>STR</th><th>CON</th><th>POW</th><th>DEX</th><th>APP</th><th>SIZ</th><th>INT</th><th>EDU</th>
@@ -55,6 +60,7 @@ function renderContent(char, contentArea) {
                           <td>${char.str}</td><td>${char.con}</td><td>${char.pow}</td><td>${char.dex}</td><td>${char.app}</td><td>${char.siz}</td><td>${char.int}</td><td>${char.edu}</td>
                         </tr>
                       </table>
+                      </div>
                     </div>
                     <div class="info-row"><span>性別：</span>${char.gender}</div>
                     <div class="info-row"><span>年齢：</span>${char.age}</div>
@@ -98,6 +104,17 @@ function renderContent(char, contentArea) {
 
         loadCharacters();
     </script>
+    <style>
+        #sp{
+            display: none;
+        }
+        #status-sp-area{
+            display: none;
+        }
+        #sp:checked + #status-sp-area{
+            display: block;
+        }
+    </style>
 </body>
 </html>
 
