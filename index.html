@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <meta property="og:title" content="Fujino.の公式サイト">
+    <meta property="og:description" content="創作をまとめたサイトです！">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="直接リンク">
+    <meta property="og:image" content="直接リンク">
+    <meta property="og:site_name" content="サイト名">
+    <link rel="icon" href="icon/favicon.ico">
+</head>
+<section id="jump-top"><a href="#top">TOP</a></section>
+<div class="loading-screen"></div>
+<body>
+    <div id="top">
+        <p id="intro"><br><br><br><br><br><br><br>ある者が力を手に入れた。<br><br>人ならざる"それ"は強力になった魔力をもって、<br><br>空想の世界を創り上げた。<br><br>そして、自身の元に来た人間に向かってこう言った。<br><br>「ようこそ、我が家へ。」</p>
+        <img src="img/top.png" alt="top" id="top-img">     
+    </div>
+    <div id="entrance">
+        <h2>エントランス</h2>
+    <div id="original">
+        <a href="1.html" class="original-btn"><p>現想RPG</p></a>
+        <a href="2.html" class="original-btn"><p>ホシノオトシゴ</p></a>
+        <a href="3.html" class="original-btn"><p>異形夜行</p></a>
+        <a href="4.html" class="original-btn"><p>ノーリ旅行記</p></a>
+    </div>
+    <div id="others-btn">
+        <a href="trpg.html" id="trpg"><p>TRPG</p></a>
+        <a href="Fujino.html" id="me"><p>家主の部屋</p></a>
+        </div>
+    </div>
+        <h2 id="news-h2" >ニュース</h2>
+    <div id="news-container">
+        <div id="news"></div>
+    </div>
+    <script>
+    fetch('news.json').then(res => res.json()).then(data => {
+        const container = document.getElementById('news');
+        // 先頭から3件のみを取得
+        data.slice(0, 3).forEach(item => {
+            const a = document.createElement('a');
+            a.className = 'news';
+            a.innerHTML = `${item.date} ${item.title}`;
+            container.appendChild(a);
+        });
+    }).catch(e => console.log("News file not found."));
+</script>
+</body>
+<footer>
+    <p>© 2026 Fujino.</p>
+</footer>
+</html>

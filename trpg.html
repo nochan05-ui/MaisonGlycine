@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRPG</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <meta property="og:title" content="TRPG">
+    <meta property="og:description" content="Fujino.のTRPGキャラクター一覧ページです。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="直接リンク">
+    <meta property="og:image" content="直接リンク">
+    <meta property="og:site_name" content="サイト名">
+    <link rel="icon" href="icon/favicon.ico">
+</head>
+<div class="loading-screen"></div>
+<body>
+    <h2>TRPG　キャラ一覧</h2>
+    <div class="main-container">
+        <div class="sidebar" id="sidebar"></div>
+        <div class="content-area" id="content-area"></div>
+    </div>
+<a href="index.html#entrance" class="entrance">エントランスに戻る</a>
+    <script>
+        async function loadCharacters() {
+            try {
+                const response = await fetch('data.json');
+                const characters = await response.json();
+                initApp(characters);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+function renderContent(char, contentArea) {
+            contentArea.innerHTML = `
+                <div class="content-left">
+                    <div class="tachie-box">
+                        <img src="img/${char.no}.png" alt="${char.name}">
+                    </div>
+                </div>
+                <div class="content-right">
+                    <div class="char-no">No. ${char.no}</div>
+                    <div class="char-name">${char.name}</div>
+                    <div class="char-reading">${char.reading}</div>
+                    <div class="info-row"><span>通過シナリオ：</span>${char.scenario}</div>
+                    <div class="info-row"><span>HO：</span>${char.ho}（${char.ho_name}）</div>
+                    <div class="info-row">
+                      <span>ステータス：</span>
+                      <table class="status-table">
+                        <tr>
+                          <th>STR</th><th>CON</th><th>POW</th><th>DEX</th><th>APP</th><th>SIZ</th><th>INT</th><th>EDU</th>
+                        </tr>
+                        <tr>
+                          <td>${char.str}</td><td>${char.con}</td><td>${char.pow}</td><td>${char.dex}</td><td>${char.app}</td><td>${char.siz}</td><td>${char.int}</td><td>${char.edu}</td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="info-row"><span>性別：</span>${char.gender}</div>
+                    <div class="info-row"><span>年齢：</span>${char.age}</div>
+                    <div class="info-row"><span>身長：</span>${char.height} cm</div>
+                    <div class="info-row"><span>誕生日：</span>${char.birthday}</div>
+                </div>
+                <div class="description-box">
+                    ${char.description}
+                </div>
+            `;
+        }
+
+        function initApp(characters) {
+            const sidebar = document.getElementById('sidebar');
+            const contentArea = document.getElementById('content-area');
+
+            characters.forEach((char, index) => {
+                const btn = document.createElement('div');
+                btn.className = 'icon-btn';
+                if (index === 0) btn.classList.add('active');
+
+                const img = document.createElement('img');
+                img.src = `icon/${char.no}.png`;
+                img.alt = char.name;
+
+                btn.appendChild(img);
+
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.icon-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderContent(char, contentArea);
+                });
+
+                sidebar.appendChild(btn);
+            });
+
+            if (characters.length > 0) {
+                renderContent(characters[0], contentArea);
+            }
+        }
+
+        loadCharacters();
+    </script>
+</body>
+</html>
+
+
+

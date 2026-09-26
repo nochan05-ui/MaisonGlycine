@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>news</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <meta property="og:title" content="news">
+    <meta property="og:description" content="ページの説明文">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="直接リンク">
+    <meta property="og:image" content="直接リンク">
+    <meta property="og:site_name" content="サイト名">
+    <link rel="icon" href="icon/favicon.ico">
+
+    <style>
+        a:link, a:visited {
+            color: var(--main-color);
+            border: 0;
+        }
+        a:hover {
+            background: var(--bosub-color);
+        }
+        </style>
+</head>
+<div class="loading-screen"></div>
+<body>
+    <h2>News</h2>
+    <div id="news-container"></div>
+    <a href="index.html#entrance" class="entrance">エントランスに戻る</a>
+<script type="text/javascript">
+</script>
+    <script>
+        fetch('news.json').then(res => res.json()).then(data => {
+            const container = document.getElementById('news-container');
+            data.slice(0, 1000000).forEach(item => {
+                const a = document.createElement('a');
+                a.className = 'news-container';
+                a.innerHTML = `${item.date} ${item.title}`;
+                a.href = item.url;
+                container.appendChild(a);
+            });
+        }).catch(e => console.log("News file not found."));
+    </script>
+</body>
+
+</html>
