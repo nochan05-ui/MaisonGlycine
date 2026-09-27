@@ -16,11 +16,12 @@
 </head>
 <div class="loading-screen"></div>
 <body>
-    <h2>TRPG　キャラ一覧</h2>
-
+    <h2>TRPG キャラ一覧</h2>
     <div class="main-container">
         <div class="sidebar" id="sidebar"></div>
-        <div class="content-area" id="content-area"></div>
+        <div class="content-area-wrapper">
+            <div class="content-area" id="content-area"></div>
+        </div>
     </div>
 <a href="index.html#entrance" class="entrance">エントランスに戻る</a>
     <script>
@@ -33,7 +34,7 @@
                 console.error(error);
             }
         }
-function renderContent(char, contentArea) {
+        function renderContent(char, contentArea) {
             contentArea.innerHTML = `
                 <div class="content-left">
                     <div class="tachie-box">
@@ -46,20 +47,14 @@ function renderContent(char, contentArea) {
                     <div class="char-reading">${char.reading}</div>
                     <div class="info-row"><span>通過シナリオ：</span>${char.scenario}</div>
                     <div class="info-row"><span>HO：</span>${char.ho}（${char.ho_name}）</div>
-                    <div class="info-row">
-                      <span>ステータス：</span>
-                      <br>
-                          <label for="sp">▼ステータスを表示します</label>
-                          <input type="checkbox"id="sp">
-                      <div id="status-sp-area">
-                      <table class="status-table">
-                        <tr>
-                          <th>STR</th><th>CON</th><th>POW</th><th>DEX</th><th>APP</th><th>SIZ</th><th>INT</th><th>EDU</th>
-                        </tr>
-                        <tr>
-                          <td>${char.str}</td><td>${char.con}</td><td>${char.pow}</td><td>${char.dex}</td><td>${char.app}</td><td>${char.siz}</td><td>${char.int}</td><td>${char.edu}</td>
-                        </tr>
-                      </table>
+                    <div class="info-row status-wrapper">
+                    <div><span>ステータス：</span></div>
+                      <div class="spoiler-container">
+                          <div class="spoiler-mask">クリックして表示</div>
+                          <table class="status-table">
+                            <tr><th>STR</th><th>CON</th><th>POW</th><th>DEX</th><th>APP</th><th>SIZ</th><th>INT</th><th>EDU</th></tr>
+                            <tr><td>${char.str}</td><td>${char.con}</td><td>${char.pow}</td><td>${char.dex}</td><td>${char.app}</td><td>${char.siz}</td><td>${char.int}</td><td>${char.edu}</td></tr>
+                          </table>
                       </div>
                     </div>
                     <div class="info-row"><span>性別：</span>${char.gender}</div>
@@ -71,6 +66,11 @@ function renderContent(char, contentArea) {
                     ${char.description}
                 </div>
             `;
+
+            const spoilerMask = contentArea.querySelector('.spoiler-mask');
+            spoilerMask.addEventListener('click', () => {
+                spoilerMask.style.display = 'none';
+            });
         }
 
         function initApp(characters) {
@@ -104,19 +104,5 @@ function renderContent(char, contentArea) {
 
         loadCharacters();
     </script>
-    <style>
-        #sp{
-            display: none;
-        }
-        #status-sp-area{
-            display: none;
-        }
-        #sp:checked + #status-sp-area{
-            display: block;
-        }
-    </style>
 </body>
 </html>
-
-
-
